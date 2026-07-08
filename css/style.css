@@ -244,8 +244,8 @@ input, select, textarea { font-family: var(--sans); }
   box-shadow: var(--shadow-lg);
 }
 .hero-img-1 { width: 200px; height: 260px; bottom: 40px; left: 0; transform: rotate(-5deg); z-index: 1; animation: float1 6s ease-in-out infinite; }
-.hero-img-2 { width: 180px; height: 230px; top: 20px; left: 80px; transform: rotate(3deg); z-index: 2; animation: float2 7s ease-in-out infinite; }
-.hero-img-3 { width: 160px; height: 200px; bottom: 20px; right: 0; transform: rotate(-2deg); z-index: 3; animation: float3 5s ease-in-out infinite; }
+.hero-img-2 { width: 180px; height: 230px; top: 20px; left: 80px; margin-left: 40px; transform: rotate(3deg); z-index: 2; animation: float2 7s ease-in-out infinite; }
+.hero-img-3 { width: 160px; height: 200px; bottom: 20px; right: 0; margin-left: 40px; transform: rotate(-2deg); z-index: 3; animation: float3 5s ease-in-out infinite; }
 .hero-img-label {
   background: rgba(0,0,0,0.6); color: var(--white);
   font-size: 0.7rem; font-weight: 500;
@@ -518,7 +518,7 @@ input, select, textarea { font-family: var(--sans); }
 .ahl i { color: var(--gold); }
 
 /* ==================== GALLERY ==================== */
-.gallery-section {
+/* .gallery-section {
   padding: 100px 0;
   background: var(--cream);
 }
@@ -551,7 +551,155 @@ input, select, textarea { font-family: var(--sans); }
 }
 .gal-item:hover::before { color: rgba(255,255,255,0.6); }
 .gal-tall { grid-row: span 2; }
-.gal-wide { grid-column: span 2; }
+.gal-wide { grid-column: span 2; } */
+
+
+/* ==================== GALLERY GRID ==================== */
+.gallery-section {
+  padding: 100px 0;
+  background: var(--cream);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 260px 260px;
+  gap: 14px;
+}
+
+/* ── Base card ── */
+.gal-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  cursor: pointer;
+  background: #1a1a1a;
+}
+
+/* ── Tall card — 2 rows ── */
+.gal-item.gal-tall {
+  grid-row: span 2;        /* 260+260+14gap = 534px tall */
+}
+
+/* ── Wide card — 2 columns ── */
+.gal-item.gal-wide {
+  grid-column: span 2;     /* 2 columns wide */
+}
+
+/* ── Image fill ── */
+.gal-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.gal-item:hover img {
+  transform: scale(1.06);
+}
+
+/* ── Video fill ── */
+.gal-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.gal-item:hover video {
+  transform: scale(1.04);
+}
+
+/* ── Hover label overlay ── */
+.gal-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.72));
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 32px 14px 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.gal-item:hover .gal-label {
+  opacity: 1;
+}
+
+/* ── Video play badge ── */
+.gal-video .gal-play-icon {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: rgba(196, 147, 63, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.7rem;
+  z-index: 3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+/* Tablet — 2 columns */
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 12px;
+  }
+
+  .gal-item {
+    height: 220px;
+  }
+
+  .gal-item.gal-tall {
+    grid-row: span 1;     /* tablet pe tall band */
+    height: 220px;
+  }
+
+  .gal-item.gal-wide {
+    grid-column: span 2;  /* wide full width */
+    height: 220px;
+  }
+}
+
+/* Mobile — 2 columns small */
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .gal-item {
+    height: 160px;
+  }
+
+  .gal-item.gal-tall {
+    height: 160px;
+    grid-row: span 1;
+  }
+
+  .gal-item.gal-wide {
+    grid-column: span 2;
+    height: 160px;
+  }
+
+  .gal-label {
+    opacity: 1;           /* mobile pe label hamesha dikhe */
+    font-size: 0.72rem;
+    padding: 20px 10px 10px;
+  }
+}
+
 
 /* Lightbox */
 .lightbox {
